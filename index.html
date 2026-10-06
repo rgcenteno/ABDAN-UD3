@@ -1,0 +1,2104 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+        <link rel="next" href="EBS/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Manual básico de supervisión</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#manual-basico-de-supervision-de-amazon-efs-elastic-file-system" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Manual básico de supervisión" class="md-header__button md-logo" aria-label="Manual básico de supervisión" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Manual básico de supervisión
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              EFS
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Cambiar a modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Cambiar a modo light"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo light" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Manual básico de supervisión" class="md-nav__button md-logo" aria-label="Manual básico de supervisión" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Manual básico de supervisión
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EFS
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EFS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#aws-efs-monitoring-guia-de-metricas-para-operaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS EFS Monitoring: Guía de Métricas para Operaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AWS EFS Monitoring: Guía de Métricas para Operaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-utilizacion-del-rendimiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Utilización del rendimiento (%)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Utilización del rendimiento (%)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-utilizacion-de-iops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Utilización de IOPS (%)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Utilización de IOPS (%)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-iops-por-tipo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. IOPS por tipo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. IOPS por tipo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Qué revisar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lecturas-elevadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lecturas elevadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escrituras-elevadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Escrituras elevadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadatos-elevados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadatos elevados
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-rendimiento-por-tipo-throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Rendimiento por tipo (Throughput)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Rendimiento por tipo (Throughput)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-optimos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores óptimos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-conexiones-de-cliente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Conexiones de cliente
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Conexiones de cliente">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-bytes-de-almacenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Bytes de almacenamiento
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Bytes de almacenamiento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#61-datos-almacenados-en-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1. Datos almacenados en Standard
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1. Datos almacenados en Standard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recomendacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recomendación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-datos-almacenados-en-ia-infrequent-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2. Datos almacenados en IA (Infrequent Access)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2. Datos almacenados en IA (Infrequent Access)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-datos-almacenados-en-archive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3. Datos almacenados en Archive
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3. Datos almacenados en Archive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objetivo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alertas-recomendadas-para-produccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alertas recomendadas para producción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#categorizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Categorización
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Categorización">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-rendimiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de rendimiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-capacidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de capacidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-costes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de costes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-disponibilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de disponibilidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indicadores-de-necesidad-de-escalado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de necesidad de escalado
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="EBS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EBS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#aws-efs-monitoring-guia-de-metricas-para-operaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS EFS Monitoring: Guía de Métricas para Operaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AWS EFS Monitoring: Guía de Métricas para Operaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-utilizacion-del-rendimiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Utilización del rendimiento (%)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Utilización del rendimiento (%)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-utilizacion-de-iops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Utilización de IOPS (%)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Utilización de IOPS (%)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-iops-por-tipo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. IOPS por tipo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. IOPS por tipo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Qué revisar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lecturas-elevadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lecturas elevadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escrituras-elevadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Escrituras elevadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadatos-elevados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadatos elevados
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-rendimiento-por-tipo-throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Rendimiento por tipo (Throughput)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Rendimiento por tipo (Throughput)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-optimos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores óptimos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-conexiones-de-cliente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Conexiones de cliente
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Conexiones de cliente">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-bytes-de-almacenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Bytes de almacenamiento
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Bytes de almacenamiento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#61-datos-almacenados-en-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1. Datos almacenados en Standard
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1. Datos almacenados en Standard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recomendacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recomendación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-datos-almacenados-en-ia-infrequent-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2. Datos almacenados en IA (Infrequent Access)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2. Datos almacenados en IA (Infrequent Access)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-datos-almacenados-en-archive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3. Datos almacenados en Archive
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3. Datos almacenados en Archive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objetivo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alertas-recomendadas-para-produccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alertas recomendadas para producción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#categorizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Categorización
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Categorización">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-rendimiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de rendimiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-capacidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de capacidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-costes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de costes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-disponibilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de disponibilidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indicadores-de-necesidad-de-escalado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de necesidad de escalado
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="manual-basico-de-supervision-de-amazon-efs-elastic-file-system">Manual básico de supervisión de Amazon EFS (Elastic File System)</h1>
+<h2 id="aws-efs-monitoring-guia-de-metricas-para-operaciones">AWS EFS Monitoring: Guía de Métricas para Operaciones</h2>
+<h3 id="introduccion">Introducción</h3>
+<p>La supervisión de <strong>Amazon EFS</strong> permite controlar el rendimiento, capacidad y utilización del sistema de ficheros compartido.</p>
+<p><strong>Objetivos del administrador SysOps:</strong></p>
+<ul>
+<li>Detectar cuellos de botella de rendimiento.</li>
+<li>Identificar saturación de IOPS o throughput.</li>
+<li>Controlar el crecimiento del almacenamiento.</li>
+<li>Optimizar costes.</li>
+<li>Garantizar la disponibilidad de las aplicaciones que utilizan EFS.</li>
+</ul>
+<hr />
+<h2 id="1-utilizacion-del-rendimiento">1. Utilización del rendimiento (%)</h2>
+<p><img alt="image" src="imgs/utilizacion-rendimiento.png" /></p>
+<h3 id="que-mide">¿Qué mide?</h3>
+<p>Porcentaje de utilización del throughput disponible en el sistema EFS.</p>
+<h3 id="valores-recomendados">Valores recomendados</h3>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-50%</td>
+<td>Normal</td>
+</tr>
+<tr>
+<td>50-75%</td>
+<td>Vigilancia</td>
+</tr>
+<tr>
+<td>75-90%</td>
+<td>Alto</td>
+</tr>
+<tr>
+<td>&gt;90% sostenido</td>
+<td>Crítico</td>
+</tr>
+</tbody>
+</table>
+<h3 id="que-revisar">Qué revisar</h3>
+<ul>
+<li>Aplicaciones con accesos intensivos.</li>
+<li>Procesos batch.</li>
+<li>Copias masivas de archivos.</li>
+<li>Procesos ETL.</li>
+</ul>
+<h3 id="penalizaciones">Penalizaciones</h3>
+<ul>
+<li>Incremento de latencias.</li>
+<li>Degradación del acceso a ficheros.</li>
+<li>Necesidad de cambiar a modo Provisioned Throughput.</li>
+</ul>
+<hr />
+<h2 id="2-utilizacion-de-iops">2. Utilización de IOPS (%)</h2>
+<p><img alt="image" src="imgs/utilizacion-iops.png" /></p>
+<h3 id="que-mide_1">¿Qué mide?</h3>
+<p>Porcentaje de operaciones de entrada/salida consumidas respecto al límite disponible.</p>
+<h3 id="valores-recomendados_1">Valores recomendados</h3>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-60%</td>
+<td>Normal</td>
+</tr>
+<tr>
+<td>60-80%</td>
+<td>Vigilancia</td>
+</tr>
+<tr>
+<td>80-95%</td>
+<td>Alto</td>
+</tr>
+<tr>
+<td>&gt;95% sostenido</td>
+<td>Crítico</td>
+</tr>
+</tbody>
+</table>
+<h3 id="que-revisar_1">Qué revisar</h3>
+<ul>
+<li>Aplicaciones con muchos ficheros pequeños.</li>
+<li>Escaneos de directorios.</li>
+<li>Operaciones masivas de lectura/escritura.</li>
+</ul>
+<h3 id="penalizaciones_1">Penalizaciones</h3>
+<ul>
+<li>Mayor tiempo de respuesta.</li>
+<li>Limitación de acceso a disco.</li>
+<li>Pérdida de rendimiento global.</li>
+</ul>
+<hr />
+<h2 id="3-iops-por-tipo">3. IOPS por tipo</h2>
+<p><img alt="image" src="imgs/iops-tipo.png" /></p>
+<h3 id="que-mide_2">¿Qué mide?</h3>
+<p>Número de operaciones por segundo realizadas sobre el sistema.</p>
+<p>Se divide normalmente en:</p>
+<ul>
+<li>Lecturas (Read)</li>
+<li>Escrituras (Write)</li>
+<li>Metadatos (Metadata)</li>
+</ul>
+<h3 id="que-revisar_2">Qué revisar</h3>
+<h4 id="lecturas-elevadas">Lecturas elevadas</h4>
+<p>Pueden indicar:</p>
+<ul>
+<li>Consultas frecuentes a datos compartidos.</li>
+<li>Aplicaciones sin caché.</li>
+</ul>
+<h4 id="escrituras-elevadas">Escrituras elevadas</h4>
+<p>Pueden indicar:</p>
+<ul>
+<li>Cargas masivas.</li>
+<li>Logs excesivos.</li>
+<li>Procesos batch.</li>
+</ul>
+<h4 id="metadatos-elevados">Metadatos elevados</h4>
+<p>Pueden indicar:</p>
+<ul>
+<li>Directorios con muchos ficheros.</li>
+<li>Aplicaciones que realizan búsquedas constantes.</li>
+</ul>
+<h3 id="penalizaciones_2">Penalizaciones</h3>
+<ul>
+<li>Consumo rápido de IOPS disponibles.</li>
+<li>Latencias más elevadas.</li>
+</ul>
+<hr />
+<h2 id="4-rendimiento-por-tipo-throughput">4. Rendimiento por tipo (Throughput)</h2>
+<p><img alt="image" src="imgs/rendimiento-tipo.png" /></p>
+<h3 id="que-mide_3">¿Qué mide?</h3>
+<p>Cantidad de datos transferidos por segundo.</p>
+<p>Se divide en:</p>
+<ul>
+<li>Lectura de datos.</li>
+<li>Escritura de datos.</li>
+<li>Operaciones de metadatos.</li>
+</ul>
+<h3 id="valores-optimos">Valores óptimos</h3>
+<p>Dependen completamente de la aplicación.</p>
+<h3 id="que-revisar_3">Qué revisar</h3>
+<p>Picos de throughput pueden indicar:</p>
+<ul>
+<li>Copias masivas.</li>
+<li>Backups.</li>
+<li>Procesamiento de grandes volúmenes de información.</li>
+</ul>
+<h3 id="penalizaciones_3">Penalizaciones</h3>
+<ul>
+<li>Saturación del throughput permitido.</li>
+<li>Accesos lentos a los ficheros.</li>
+</ul>
+<hr />
+<h2 id="5-conexiones-de-cliente">5. Conexiones de cliente</h2>
+<p><img alt="image" src="imgs/conexiones-clientes.png" /></p>
+<h3 id="que-mide_4">¿Qué mide?</h3>
+<p>Número de clientes o instancias conectadas simultáneamente al sistema EFS.</p>
+<h3 id="valores-recomendados_2">Valores recomendados</h3>
+<p>Amazon EFS soporta miles de conexiones, pero deben vigilarse aumentos anómalos.</p>
+<h3 id="que-revisar_4">Qué revisar</h3>
+<ul>
+<li>Nuevos servidores conectándose.</li>
+<li>Incrementos inesperados de consumo.</li>
+<li>Procesos que no desmontan correctamente el filesystem.</li>
+</ul>
+<h3 id="penalizaciones_4">Penalizaciones</h3>
+<ul>
+<li>Incremento de carga en operaciones de metadatos.</li>
+<li>Posibles degradaciones de rendimiento.</li>
+</ul>
+<hr />
+<h2 id="6-bytes-de-almacenamiento">6. Bytes de almacenamiento</h2>
+<p><img alt="image" src="imgs/bytes-almacenamiento.png" /></p>
+<h3 id="que-mide_5">¿Qué mide?</h3>
+<p>Cantidad total de datos almacenados en el sistema EFS.</p>
+<p>Suele dividirse en:</p>
+<ul>
+<li>Standard</li>
+<li>Infrequent Access (IA)</li>
+<li>Archive</li>
+</ul>
+<h3 id="valores-recomendados_3">Valores recomendados</h3>
+<p>Monitorizar tendencias de crecimiento más que valores absolutos.</p>
+<h3 id="que-revisar_5">Qué revisar</h3>
+<ul>
+<li>Crecimiento continuo.</li>
+<li>Archivos temporales no eliminados.</li>
+<li>Backups almacenados incorrectamente.</li>
+</ul>
+<h3 id="penalizaciones_5">Penalizaciones</h3>
+<ul>
+<li>Incremento de costes.</li>
+<li>Consumo innecesario de almacenamiento premium.</li>
+</ul>
+<hr />
+<h3 id="61-datos-almacenados-en-standard">6.1. Datos almacenados en Standard</h3>
+<h4 id="que-mide_6">¿Qué mide?</h4>
+<p>Datos almacenados en la clase de almacenamiento de acceso frecuente.</p>
+<h4 id="que-revisar_6">Qué revisar</h4>
+<ul>
+<li>Información activa de aplicaciones.</li>
+<li>Datos de uso diario.</li>
+</ul>
+<h4 id="recomendacion">Recomendación</h4>
+<p>Mover automáticamente datos poco utilizados a IA mediante Lifecycle Management.</p>
+<hr />
+<h3 id="62-datos-almacenados-en-ia-infrequent-access">6.2. Datos almacenados en IA (Infrequent Access)</h3>
+<h4 id="que-mide_7">¿Qué mide?</h4>
+<p>Archivos accedidos con poca frecuencia.</p>
+<h4 id="objetivo">Objetivo</h4>
+<p>Reducir costes manteniendo disponibilidad inmediata.</p>
+<h4 id="que-revisar_7">Qué revisar</h4>
+<ul>
+<li>Volumen movido a IA.</li>
+<li>Eficacia de las políticas Lifecycle.</li>
+</ul>
+<h4 id="penalizaciones_6">Penalizaciones</h4>
+<ul>
+<li>Recuperaciones frecuentes pueden aumentar costes.</li>
+</ul>
+<hr />
+<h3 id="63-datos-almacenados-en-archive">6.3. Datos almacenados en Archive</h3>
+<h4 id="que-mide_8">¿Qué mide?</h4>
+<p>Información archivada de muy baja frecuencia de acceso.</p>
+<h4 id="objetivo_1">Objetivo</h4>
+<p>Minimizar costes de almacenamiento.</p>
+<h4 id="que-revisar_8">Qué revisar</h4>
+<ul>
+<li>Datos históricos.</li>
+<li>Retención documental.</li>
+</ul>
+<h4 id="penalizaciones_7">Penalizaciones</h4>
+<ul>
+<li>Mayor latencia de recuperación.</li>
+</ul>
+<hr />
+<h2 id="alertas-recomendadas-para-produccion">Alertas recomendadas para producción</h2>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Alarma</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Utilización del rendimiento</td>
+<td>&gt;80% durante 15 min</td>
+</tr>
+<tr>
+<td>Utilización de IOPS</td>
+<td>&gt;80% durante 15 min</td>
+</tr>
+<tr>
+<td>Conexiones de cliente</td>
+<td>Incremento anómalo sostenido</td>
+</tr>
+<tr>
+<td>Throughput lectura/escritura</td>
+<td>Crecimiento no esperado</td>
+</tr>
+<tr>
+<td>Bytes almacenados</td>
+<td>Crecimiento superior al previsto</td>
+</tr>
+<tr>
+<td>Datos Standard</td>
+<td>Incremento continuo sin movimiento a IA</td>
+</tr>
+<tr>
+<td>Utilización del rendimiento</td>
+<td>&gt;90% sostenido</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="categorizacion">Categorización</h2>
+<h3 id="indicadores-de-rendimiento">Indicadores de rendimiento</h3>
+<ul>
+<li>Utilización del rendimiento (%)</li>
+<li>Utilización de IOPS (%)</li>
+<li>IOPS por tipo</li>
+<li>Rendimiento por tipo (Throughput)</li>
+</ul>
+<h3 id="indicadores-de-capacidad">Indicadores de capacidad</h3>
+<ul>
+<li>Bytes de almacenamiento</li>
+<li>Conexiones de cliente</li>
+</ul>
+<h3 id="indicadores-de-costes">Indicadores de costes</h3>
+<ul>
+<li>Datos en Standard</li>
+<li>Datos en IA</li>
+<li>Datos en Archive</li>
+<li>Crecimiento del almacenamiento</li>
+</ul>
+<h3 id="indicadores-de-disponibilidad">Indicadores de disponibilidad</h3>
+<ul>
+<li>Utilización de rendimiento</li>
+<li>Utilización de IOPS</li>
+<li>Conexiones de cliente</li>
+</ul>
+<hr />
+<h2 id="indicadores-de-necesidad-de-escalado">Indicadores de necesidad de escalado</h2>
+<p>Los indicadores que normalmente anticipan problemas de capacidad o rendimiento en EFS son:</p>
+<ul>
+<li>Utilización del rendimiento &gt;80%.</li>
+<li>Utilización de IOPS &gt;80%.</li>
+<li>Crecimiento acelerado del almacenamiento.</li>
+<li>Elevado número de operaciones de metadatos.</li>
+<li>Throughput cercano al máximo durante periodos prolongados.</li>
+<li>Incremento sostenido de latencia percibida por las aplicaciones.</li>
+</ul>
+<p><strong>Observación sobre tu captura:</strong> se aprecia una <strong>utilización de rendimiento cercana al umbral de alarma (76%)</strong>, mientras que la <strong>utilización de IOPS permanece baja</strong> y solo existen <strong>2 clientes conectados</strong>, lo que sugiere que el posible cuello de botella actual está más relacionado con el throughput que con el número de operaciones o conexiones. Además, el volumen almacenado es reducido (entorno de decenas de KB), por lo que no existe un problema de capacidad en almacenamiento.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

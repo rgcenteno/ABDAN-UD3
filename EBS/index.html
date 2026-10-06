@@ -1,0 +1,2827 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>EBS - Manual básico de supervisión</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#manual-basico-de-supervision-de-amazon-ebs-elastic-block-store" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Manual básico de supervisión" class="md-header__button md-logo" aria-label="Manual básico de supervisión" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Manual básico de supervisión
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              EBS
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Cambiar a modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Cambiar a modo light"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo light" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Manual básico de supervisión" class="md-nav__button md-logo" aria-label="Manual básico de supervisión" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Manual básico de supervisión
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EFS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EBS
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EBS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#aws-ebs-monitoring-guia-de-metricas-para-operaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS EBS Monitoring: Guía de Métricas para Operaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AWS EBS Monitoring: Guía de Métricas para Operaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-latencia-media-de-lectura-read-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Latencia media de lectura (Read Latency)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Latencia media de lectura (Read Latency)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-latencia-media-de-escritura-write-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Latencia media de escritura (Write Latency)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Latencia media de escritura (Write Latency)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-es-promedio-del-volumen-volume-avg-queue-length" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. E/S promedio del volumen (Volume Avg Queue Length)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. E/S promedio del volumen (Volume Avg Queue Length)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-rendimiento-promedio-del-volumen-volume-throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Rendimiento promedio del volumen (Volume Throughput)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Rendimiento promedio del volumen (Volume Throughput)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-optimos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores óptimos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-comprobacion-de-iops-superada-volume-iops-exceeded-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Comprobación de IOPS superada (Volume IOPS Exceeded Check)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Comprobación de IOPS superada (Volume IOPS Exceeded Check)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-comprobacion-de-rendimiento-superada-volume-throughput-exceeded-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Comprobación de rendimiento superada (Volume Throughput Exceeded Check)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Comprobación de rendimiento superada (Volume Throughput Exceeded Check)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-comprobacion-de-es-estancada-stalled-io-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Comprobación de E/S estancada (Stalled I/O Check)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Comprobación de E/S estancada (Stalled I/O Check)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-longitud-media-de-la-cola-de-operaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Longitud media de la cola de operaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Longitud media de la cola de operaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-rendimiento-de-lectura-kibs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Rendimiento de lectura (KiB/s)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Rendimiento de lectura (KiB/s)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-rendimiento-de-escritura-kibs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Rendimiento de escritura (KiB/s)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Rendimiento de escritura (KiB/s)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-operaciones-de-lectura-read-opss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Operaciones de lectura (Read Ops/s)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Operaciones de lectura (Read Ops/s)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-operaciones-de-escritura-write-opss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Operaciones de escritura (Write Ops/s)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Operaciones de escritura (Write Ops/s)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-tamano-medio-de-lectura-kibop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Tamaño medio de lectura (KiB/op)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Tamaño medio de lectura (KiB/op)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-tamano-medio-de-escritura-kibop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Tamaño medio de escritura (KiB/op)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Tamaño medio de escritura (KiB/op)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-tiempo-inactivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Tiempo inactivo (%)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Tiempo inactivo (%)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-orientativos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores orientativos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alertas-recomendadas-para-produccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alertas recomendadas para producción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#categorizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Categorización
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Categorización">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-rendimiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de rendimiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-capacidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de capacidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-costes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de costes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-disponibilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de disponibilidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indicadores-de-necesidad-de-escalado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de necesidad de escalado
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#aws-ebs-monitoring-guia-de-metricas-para-operaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS EBS Monitoring: Guía de Métricas para Operaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AWS EBS Monitoring: Guía de Métricas para Operaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-latencia-media-de-lectura-read-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Latencia media de lectura (Read Latency)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Latencia media de lectura (Read Latency)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-latencia-media-de-escritura-write-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Latencia media de escritura (Write Latency)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Latencia media de escritura (Write Latency)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-es-promedio-del-volumen-volume-avg-queue-length" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. E/S promedio del volumen (Volume Avg Queue Length)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. E/S promedio del volumen (Volume Avg Queue Length)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-rendimiento-promedio-del-volumen-volume-throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Rendimiento promedio del volumen (Volume Throughput)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Rendimiento promedio del volumen (Volume Throughput)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-optimos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores óptimos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-comprobacion-de-iops-superada-volume-iops-exceeded-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Comprobación de IOPS superada (Volume IOPS Exceeded Check)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Comprobación de IOPS superada (Volume IOPS Exceeded Check)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-comprobacion-de-rendimiento-superada-volume-throughput-exceeded-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Comprobación de rendimiento superada (Volume Throughput Exceeded Check)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Comprobación de rendimiento superada (Volume Throughput Exceeded Check)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-comprobacion-de-es-estancada-stalled-io-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Comprobación de E/S estancada (Stalled I/O Check)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Comprobación de E/S estancada (Stalled I/O Check)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-longitud-media-de-la-cola-de-operaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Longitud media de la cola de operaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Longitud media de la cola de operaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-recomendados_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-rendimiento-de-lectura-kibs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Rendimiento de lectura (KiB/s)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Rendimiento de lectura (KiB/s)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-rendimiento-de-escritura-kibs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Rendimiento de escritura (KiB/s)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Rendimiento de escritura (KiB/s)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-operaciones-de-lectura-read-opss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Operaciones de lectura (Read Ops/s)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Operaciones de lectura (Read Ops/s)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-operaciones-de-escritura-write-opss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Operaciones de escritura (Write Ops/s)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Operaciones de escritura (Write Ops/s)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-tamano-medio-de-lectura-kibop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Tamaño medio de lectura (KiB/op)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Tamaño medio de lectura (KiB/op)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-tamano-medio-de-escritura-kibop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Tamaño medio de escritura (KiB/op)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Tamaño medio de escritura (KiB/op)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-tiempo-inactivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Tiempo inactivo (%)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Tiempo inactivo (%)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mide_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué mide?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valores-orientativos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valores orientativos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-revisar_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué revisar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penalizaciones_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penalizaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alertas-recomendadas-para-produccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alertas recomendadas para producción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#categorizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Categorización
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Categorización">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-rendimiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de rendimiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-capacidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de capacidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-costes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de costes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicadores-de-disponibilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de disponibilidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indicadores-de-necesidad-de-escalado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indicadores de necesidad de escalado
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="manual-basico-de-supervision-de-amazon-ebs-elastic-block-store">Manual básico de supervisión de Amazon EBS (Elastic Block Store)</h1>
+<p><img alt="image" src="../imgs/ebs-general.png" /></p>
+<h2 id="aws-ebs-monitoring-guia-de-metricas-para-operaciones">AWS EBS Monitoring: Guía de Métricas para Operaciones</h2>
+<h3 id="introduccion">Introducción</h3>
+<p>La supervisión de <strong>Amazon EBS (Elastic Block Store)</strong> permite controlar el rendimiento y la capacidad de los volúmenes de almacenamiento utilizados por las instancias EC2.</p>
+<p><strong>Objetivos del administrador SysOps:</strong></p>
+<ul>
+<li>Detectar cuellos de botella de almacenamiento.</li>
+<li>Validar que el volumen dispone de IOPS suficientes.</li>
+<li>Identificar problemas de latencia.</li>
+<li>Optimizar costes de almacenamiento.</li>
+<li>Anticipar necesidades de escalado.</li>
+</ul>
+<hr />
+<h2 id="1-latencia-media-de-lectura-read-latency">1. Latencia media de lectura (Read Latency)</h2>
+<h3 id="que-mide">¿Qué mide?</h3>
+<p>Tiempo medio que tarda EBS en completar una operación de lectura.</p>
+<h3 id="valores-recomendados">Valores recomendados</h3>
+<table>
+<thead>
+<tr>
+<th>Latencia</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 5 ms</td>
+<td>Excelente</td>
+</tr>
+<tr>
+<td>5-10 ms</td>
+<td>Buena</td>
+</tr>
+<tr>
+<td>10-20 ms</td>
+<td>Vigilancia</td>
+</tr>
+<tr>
+<td>&gt; 20 ms</td>
+<td>Crítica</td>
+</tr>
+</tbody>
+</table>
+<h3 id="que-revisar">Qué revisar</h3>
+<ul>
+<li>Saturación del volumen.</li>
+<li>Aplicaciones con muchas lecturas.</li>
+<li>Falta de caché.</li>
+<li>Tamaño insuficiente del volumen.</li>
+</ul>
+<h3 id="penalizaciones">Penalizaciones</h3>
+<ul>
+<li>Consultas más lentas.</li>
+<li>Mayor tiempo de acceso a ficheros.</li>
+<li>Degradación del rendimiento de aplicaciones.</li>
+</ul>
+<hr />
+<h2 id="2-latencia-media-de-escritura-write-latency">2. Latencia media de escritura (Write Latency)</h2>
+<h3 id="que-mide_1">¿Qué mide?</h3>
+<p>Tiempo medio necesario para completar operaciones de escritura.</p>
+<h3 id="valores-recomendados_1">Valores recomendados</h3>
+<table>
+<thead>
+<tr>
+<th>Latencia</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 5 ms</td>
+<td>Excelente</td>
+</tr>
+<tr>
+<td>5-10 ms</td>
+<td>Buena</td>
+</tr>
+<tr>
+<td>10-20 ms</td>
+<td>Vigilancia</td>
+</tr>
+<tr>
+<td>&gt; 20 ms</td>
+<td>Crítica</td>
+</tr>
+</tbody>
+</table>
+<h3 id="que-revisar_1">Qué revisar</h3>
+<ul>
+<li>Procesos batch.</li>
+<li>Bases de datos muy activas.</li>
+<li>Volumen insuficiente para la carga.</li>
+</ul>
+<h3 id="penalizaciones_1">Penalizaciones</h3>
+<ul>
+<li>Lentitud en transacciones.</li>
+<li>Aumento del tiempo de respuesta.</li>
+<li>Posibles bloqueos de aplicación.</li>
+</ul>
+<hr />
+<h2 id="3-es-promedio-del-volumen-volume-avg-queue-length">3. E/S promedio del volumen (Volume Avg Queue Length)</h2>
+<h3 id="que-mide_2">¿Qué mide?</h3>
+<p>Número medio de operaciones esperando acceso al volumen.</p>
+<h3 id="valores-recomendados_2">Valores recomendados</h3>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-1</td>
+<td>Normal</td>
+</tr>
+<tr>
+<td>1-5</td>
+<td>Vigilancia</td>
+</tr>
+<tr>
+<td>5-10</td>
+<td>Alto</td>
+</tr>
+<tr>
+<td>&gt;10</td>
+<td>Crítico</td>
+</tr>
+</tbody>
+</table>
+<h3 id="que-revisar_2">Qué revisar</h3>
+<ul>
+<li>Saturación de IOPS.</li>
+<li>Aumento repentino de actividad.</li>
+<li>Procesos concurrentes.</li>
+</ul>
+<h3 id="penalizaciones_2">Penalizaciones</h3>
+<ul>
+<li>Incremento de latencia.</li>
+<li>Cuellos de botella en almacenamiento.</li>
+</ul>
+<hr />
+<h2 id="4-rendimiento-promedio-del-volumen-volume-throughput">4. Rendimiento promedio del volumen (Volume Throughput)</h2>
+<h3 id="que-mide_3">¿Qué mide?</h3>
+<p>Cantidad total de datos transferidos por segundo.</p>
+<h3 id="valores-optimos">Valores óptimos</h3>
+<p>Dependen del tipo de volumen:</p>
+<ul>
+<li>gp3: hasta 1.000 MiB/s.</li>
+<li>io2: hasta 4.000 MiB/s.</li>
+<li>io2 Block Express: hasta 4.000 MiB/s.</li>
+</ul>
+<h3 id="que-revisar_3">Qué revisar</h3>
+<ul>
+<li>Copias masivas.</li>
+<li>Backups.</li>
+<li>Procesos de migración.</li>
+</ul>
+<h3 id="penalizaciones_3">Penalizaciones</h3>
+<ul>
+<li>Saturación del throughput contratado.</li>
+<li>Lentitud generalizada.</li>
+</ul>
+<hr />
+<h2 id="5-comprobacion-de-iops-superada-volume-iops-exceeded-check">5. Comprobación de IOPS superada (Volume IOPS Exceeded Check)</h2>
+<h3 id="que-mide_4">¿Qué mide?</h3>
+<p>Indica si el volumen ha alcanzado o superado el límite de IOPS disponible.</p>
+<h3 id="valores-recomendados_3">Valores recomendados</h3>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Correcto</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Problema detectado</td>
+</tr>
+</tbody>
+</table>
+<h3 id="que-revisar_4">Qué revisar</h3>
+<ul>
+<li>Configuración del volumen.</li>
+<li>IOPS provisionadas.</li>
+<li>Carga generada por aplicaciones.</li>
+</ul>
+<h3 id="penalizaciones_4">Penalizaciones</h3>
+<ul>
+<li>Aumento de latencia.</li>
+<li>Operaciones pendientes.</li>
+<li>Necesidad de aumentar IOPS.</li>
+</ul>
+<hr />
+<h2 id="6-comprobacion-de-rendimiento-superada-volume-throughput-exceeded-check">6. Comprobación de rendimiento superada (Volume Throughput Exceeded Check)</h2>
+<h3 id="que-mide_5">¿Qué mide?</h3>
+<p>Detecta si el volumen alcanzó el límite máximo de throughput.</p>
+<h3 id="valores-recomendados_4">Valores recomendados</h3>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Normal</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Saturación</td>
+</tr>
+</tbody>
+</table>
+<h3 id="que-revisar_5">Qué revisar</h3>
+<ul>
+<li>Procesos intensivos de copia.</li>
+<li>Operaciones batch.</li>
+<li>Bases de datos con gran volumen de datos.</li>
+</ul>
+<h3 id="penalizaciones_5">Penalizaciones</h3>
+<ul>
+<li>Transferencias lentas.</li>
+<li>Tiempo elevado en operaciones de almacenamiento.</li>
+</ul>
+<hr />
+<h2 id="7-comprobacion-de-es-estancada-stalled-io-check">7. Comprobación de E/S estancada (Stalled I/O Check)</h2>
+<h3 id="que-mide_6">¿Qué mide?</h3>
+<p>Detecta operaciones bloqueadas o que no progresan correctamente.</p>
+<h3 id="valores-recomendados_5">Valores recomendados</h3>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Correcto</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Problema</td>
+</tr>
+</tbody>
+</table>
+<h3 id="que-revisar_6">Qué revisar</h3>
+<ul>
+<li>Estado del volumen.</li>
+<li>Estado de la instancia EC2.</li>
+<li>Problemas de sistema operativo.</li>
+</ul>
+<h3 id="penalizaciones_6">Penalizaciones</h3>
+<ul>
+<li>Errores de aplicación.</li>
+<li>Riesgo de indisponibilidad.</li>
+</ul>
+<hr />
+<h2 id="8-longitud-media-de-la-cola-de-operaciones">8. Longitud media de la cola de operaciones</h2>
+<h3 id="que-mide_7">¿Qué mide?</h3>
+<p>Número de solicitudes pendientes de ser procesadas por el volumen.</p>
+<h3 id="valores-recomendados_6">Valores recomendados</h3>
+<p>Idealmente cercana a cero.</p>
+<h3 id="que-revisar_7">Qué revisar</h3>
+<ul>
+<li>Saturación de disco.</li>
+<li>Actividad excesiva.</li>
+<li>Insuficientes IOPS provisionadas.</li>
+</ul>
+<h3 id="penalizaciones_7">Penalizaciones</h3>
+<ul>
+<li>Mayores latencias.</li>
+<li>Menor rendimiento global.</li>
+</ul>
+<hr />
+<h2 id="9-rendimiento-de-lectura-kibs">9. Rendimiento de lectura (KiB/s)</h2>
+<h3 id="que-mide_8">¿Qué mide?</h3>
+<p>Cantidad de datos leídos por segundo.</p>
+<h3 id="que-revisar_8">Qué revisar</h3>
+<ul>
+<li>Consultas intensivas.</li>
+<li>Procesos ETL.</li>
+<li>Escaneos completos.</li>
+</ul>
+<h3 id="penalizaciones_8">Penalizaciones</h3>
+<ul>
+<li>Consumo elevado de throughput.</li>
+</ul>
+<hr />
+<h2 id="10-rendimiento-de-escritura-kibs">10. Rendimiento de escritura (KiB/s)</h2>
+<h3 id="que-mide_9">¿Qué mide?</h3>
+<p>Cantidad de datos escritos por segundo.</p>
+<h3 id="que-revisar_9">Qué revisar</h3>
+<ul>
+<li>Logs.</li>
+<li>Importaciones de datos.</li>
+<li>Procesos batch.</li>
+</ul>
+<h3 id="penalizaciones_9">Penalizaciones</h3>
+<ul>
+<li>Saturación del throughput.</li>
+<li>Latencias elevadas.</li>
+</ul>
+<hr />
+<h2 id="11-operaciones-de-lectura-read-opss">11. Operaciones de lectura (Read Ops/s)</h2>
+<h3 id="que-mide_10">¿Qué mide?</h3>
+<p>Número de operaciones de lectura realizadas cada segundo.</p>
+<h3 id="que-revisar_10">Qué revisar</h3>
+<ul>
+<li>Cargas analíticas.</li>
+<li>Consultas frecuentes.</li>
+<li>Aplicaciones muy dependientes de lectura.</li>
+</ul>
+<h3 id="penalizaciones_10">Penalizaciones</h3>
+<ul>
+<li>Consumo elevado de IOPS.</li>
+</ul>
+<hr />
+<h2 id="12-operaciones-de-escritura-write-opss">12. Operaciones de escritura (Write Ops/s)</h2>
+<h3 id="que-mide_11">¿Qué mide?</h3>
+<p>Número de operaciones de escritura por segundo.</p>
+<h3 id="que-revisar_11">Qué revisar</h3>
+<ul>
+<li>Bases de datos.</li>
+<li>Sistemas de logs.</li>
+<li>Replicaciones.</li>
+</ul>
+<h3 id="penalizaciones_11">Penalizaciones</h3>
+<ul>
+<li>Agotamiento de IOPS.</li>
+<li>Incremento de latencia.</li>
+</ul>
+<hr />
+<h2 id="13-tamano-medio-de-lectura-kibop">13. Tamaño medio de lectura (KiB/op)</h2>
+<h3 id="que-mide_12">¿Qué mide?</h3>
+<p>Cantidad media de datos transferidos en cada operación de lectura.</p>
+<h3 id="interpretacion">Interpretación</h3>
+<ul>
+<li>Tamaños pequeños → muchas operaciones.</li>
+<li>Tamaños grandes → menos IOPS y más throughput.</li>
+</ul>
+<h3 id="que-revisar_12">Qué revisar</h3>
+<p>Patrones de acceso de la aplicación.</p>
+<hr />
+<h2 id="14-tamano-medio-de-escritura-kibop">14. Tamaño medio de escritura (KiB/op)</h2>
+<h3 id="que-mide_13">¿Qué mide?</h3>
+<p>Cantidad media de datos escritos por operación.</p>
+<h3 id="que-revisar_13">Qué revisar</h3>
+<ul>
+<li>Configuración de bases de datos.</li>
+<li>Aplicaciones que generan ficheros.</li>
+</ul>
+<h3 id="penalizaciones_12">Penalizaciones</h3>
+<p>Escrituras demasiado pequeñas generan mayor consumo de IOPS.</p>
+<hr />
+<h2 id="15-tiempo-inactivo">15. Tiempo inactivo (%)</h2>
+<h3 id="que-mide_14">¿Qué mide?</h3>
+<p>Porcentaje de tiempo durante el cual el volumen no recibe operaciones.</p>
+<h3 id="valores-orientativos">Valores orientativos</h3>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&gt;70%</td>
+<td>Infrautilizado</td>
+</tr>
+<tr>
+<td>30-70%</td>
+<td>Uso normal</td>
+</tr>
+<tr>
+<td>&lt;30%</td>
+<td>Uso intensivo</td>
+</tr>
+</tbody>
+</table>
+<h3 id="que-revisar_14">Qué revisar</h3>
+<ul>
+<li>Volúmenes sobredimensionados.</li>
+<li>Recursos infrautilizados.</li>
+</ul>
+<h3 id="penalizaciones_13">Penalizaciones</h3>
+<p>Ninguna a nivel técnico, pero puede indicar costes innecesarios.</p>
+<hr />
+<h2 id="alertas-recomendadas-para-produccion">Alertas recomendadas para producción</h2>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Alarma</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read Latency</td>
+<td>&gt;15 ms durante 15 min</td>
+</tr>
+<tr>
+<td>Write Latency</td>
+<td>&gt;15 ms durante 15 min</td>
+</tr>
+<tr>
+<td>Queue Length</td>
+<td>&gt;5 sostenido</td>
+</tr>
+<tr>
+<td>IOPS Exceeded Check</td>
+<td>Valor = 1</td>
+</tr>
+<tr>
+<td>Throughput Exceeded Check</td>
+<td>Valor = 1</td>
+</tr>
+<tr>
+<td>Stalled I/O Check</td>
+<td>Valor = 1</td>
+</tr>
+<tr>
+<td>Tiempo inactivo</td>
+<td>Revisión si &gt;90% de forma permanente</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="categorizacion">Categorización</h2>
+<h3 id="indicadores-de-rendimiento">Indicadores de rendimiento</h3>
+<ul>
+<li>Read Latency</li>
+<li>Write Latency</li>
+<li>Read Ops/s</li>
+<li>Write Ops/s</li>
+<li>Read Throughput</li>
+<li>Write Throughput</li>
+<li>Queue Length</li>
+</ul>
+<h3 id="indicadores-de-capacidad">Indicadores de capacidad</h3>
+<ul>
+<li>IOPS Exceeded Check</li>
+<li>Throughput Exceeded Check</li>
+<li>Stalled I/O Check</li>
+</ul>
+<h3 id="indicadores-de-costes">Indicadores de costes</h3>
+<ul>
+<li>Tiempo inactivo</li>
+<li>Volúmenes sobredimensionados</li>
+<li>IOPS provisionadas sin utilización</li>
+</ul>
+<h3 id="indicadores-de-disponibilidad">Indicadores de disponibilidad</h3>
+<ul>
+<li>Stalled I/O Check</li>
+<li>Read Latency</li>
+<li>Write Latency</li>
+<li>Queue Length</li>
+</ul>
+<hr />
+<h2 id="indicadores-de-necesidad-de-escalado">Indicadores de necesidad de escalado</h2>
+<p>Los indicadores que más rápidamente anticipan la necesidad de aumentar capacidad en un volumen EBS son:</p>
+<ul>
+<li>Latencia de lectura superior a 10-15 ms de forma sostenida.</li>
+<li>Latencia de escritura superior a 10-15 ms.</li>
+<li>Queue Length superior a 5.</li>
+<li>Activación de "IOPS Exceeded Check".</li>
+<li>Activación de "Throughput Exceeded Check".</li>
+<li>Crecimiento constante de operaciones de lectura y escritura.</li>
+<li>Throughput cercano al límite contratado durante periodos prolongados.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
