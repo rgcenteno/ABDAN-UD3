@@ -1,4 +1,4 @@
-site_name: "Manual básico de supervisión EFS"
+site_name: "Manual básico de supervisión"
 theme:
   name: material
   locale: "es"
@@ -14,4 +14,5 @@ theme:
         icon: material/brightness-4
         name: Cambiar a modo light
 nav:
-    - Parámetros: "index.md"
+    - EFS: "index.md"
+    - EBS: "EBS.md"
